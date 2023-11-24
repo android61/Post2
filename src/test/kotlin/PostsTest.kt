@@ -3,55 +3,37 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-class PostsTest {
+class WallServiceTest {
+
     @Before
-    fun clearArray() {
+    fun clearBeforeTest() {
         WallService.clear()
     }
 
     @Test
-    fun testAddCount(){
-        val post = Post(1,1, 1, date = 1)
-
-        val beforeCount = WallService.count()
-        WallService.add(post)
-        val afterCount = WallService.count()
-
-        assertEquals(beforeCount + 1, afterCount)
-
+    fun add_id1() {
+        val result = WallService.add(Post(1, 1, 1, date = 1))
+        assertEquals(1, result.id)
     }
 
     @Test
-    fun testUpdateTrue(){
-        val post = Post(1,1, 1, date = 1)
-
-        WallService.add(post)
-        val result =  WallService.update(post)
-        assertEquals( true, result)
-
+    fun add_id5() {
+        val result = WallService.add(Post(5, 1, 1, date = 1))
+        assertEquals(1, result.id)
     }
 
     @Test
-    fun testUpdateFalse(){
-        val post = Post(1,1, 1, date = 1)
-
-        val result =  WallService.update(post)
-        assertEquals( false, result)
-
+    fun update_true() {
+        WallService.add(Post(1, 1, 1, date = 1))
+        val result = WallService.update(Post(1, 1, 1, date = 1))
+        assertEquals(true, result)
     }
 
     @Test
-    fun testAddUniqueId(){
-        val post = Post(1,1, 1, date = 1)
-
-
-
-
-      val result1 =  WallService.add(post)
-        val result2 =  WallService.add(post)
-
-        assertNotEquals( result1.id, result2.id)
-
+    fun update_false() {
+        WallService.add(Post(1, 1, 1, date = 1))
+        val result = WallService.update(Post(10, 1, 1, date = 1))
+        assertEquals(false, result)
     }
 
     @Test
